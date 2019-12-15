@@ -6,4 +6,6 @@
     <color name="text_tab">#ffffff</color>
     <color name="selected_filter">#221f20</color>
     <color name="normal_filter">#8a8889</color>
+    <color name="lightblue">#82a0f8</color>
+
 </resources>
