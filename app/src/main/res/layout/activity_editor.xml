@@ -53,7 +53,7 @@
         app:srcCompat="@drawable/ic_emoticon" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/ibText"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
@@ -70,7 +70,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/card_background_color"
         app:layout_constraintEnd_toStartOf="@+id/ibBrush"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintStart_toEndOf="@+id/ibText"
         app:layout_constraintTop_toBottomOf="@+id/image_preview"
         app:srcCompat="@drawable/ic_burst_mode_black_24dp" />
 

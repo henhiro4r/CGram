@@ -22,9 +22,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.cgram.adapter.ViewPagerAdapter;
+import com.example.cgram.fragment.AddTextFragment;
 import com.example.cgram.fragment.EditImageFragment;
 import com.example.cgram.fragment.EmojiFragment;
 import com.example.cgram.fragment.FilterImageFragment;
+import com.example.cgram.utils.AddTextFragmentListener;
 import com.example.cgram.utils.BitmapUtils;
 import com.example.cgram.utils.EditImageFragmentListener;
 import com.example.cgram.utils.EmojiFragmentListener;
@@ -52,7 +54,7 @@ import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
-public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener, EmojiFragmentListener {
+public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener, EmojiFragmentListener, AddTextFragmentListener {
 
     private PhotoEditorView photoEditorView;
     private PhotoEditor photoEditor;
@@ -64,7 +66,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     private static int RESULT_LOAD_IMAGE = 1;
     private ConstraintLayout consEditor;
     public static String fileName;
-    ImageButton ibEmoji, ibBrush;
+    ImageButton ibEmoji, ibBrush, ibText;
 
     int brightnessFinal = 0;
     float saturationFinal = 1.0f;
@@ -88,6 +90,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         ViewPager editorViewPager = findViewById(R.id.viewpager);
         ibBrush = findViewById(R.id.ibBrush);
         ibEmoji = findViewById(R.id.ibEmoji);
+        ibText = findViewById(R.id.ibText);
         consEditor = findViewById(R.id.ConsEditor);
 
         if (actionBar != null) {
@@ -116,6 +119,15 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         }
 
         ibEmoji.setOnClickListener(emojiListener);
+
+        ibText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddTextFragment addTextFragment = AddTextFragment.getInstance();
+                addTextFragment.setListener(EditorActivity.this);
+                addTextFragment.show(getSupportFragmentManager(), addTextFragment.getTag());
+            }
+        });
         setupViewPager(editorViewPager);
         editorTabLayout.setupWithViewPager(editorViewPager);
     }
@@ -327,5 +339,10 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     @Override
     public void onEmojiSelected(String emoji) {
         photoEditor.addEmoji(emoji);
+    }
+
+    @Override
+    public void onAddTextButtonClick(String text, int Color) {
+        photoEditor.addText(text, Color);
     }
 }
