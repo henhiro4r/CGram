@@ -18,15 +18,19 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="@string/bright"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/bright"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/sb_brightness"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:foregroundTint="@color/colorPrimary"
+            android:thumbTint="@color/colorPrimary" />
 
     </LinearLayout>
 
@@ -38,15 +42,18 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="@string/contrast"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/contrast"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/sb_contrast"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:thumbTint="@color/colorPrimary" />
 
     </LinearLayout>
 
@@ -58,15 +65,18 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="@string/saturation"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/saturation"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/sb_saturation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:thumbTint="@color/colorPrimary" />
 
     </LinearLayout>
 
