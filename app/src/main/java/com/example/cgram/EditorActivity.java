@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -45,9 +46,13 @@ import java.io.FileInputStream;
 import java.util.List;
 import java.util.Objects;
 
+import ja.burhanrashid52.photoeditor.PhotoEditor;
+import ja.burhanrashid52.photoeditor.PhotoEditorView;
+
 public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener {
 
-    private ImageView preview;
+    private PhotoEditorView photoEditorView;
+    private PhotoEditor photoEditor;
     public static String IMAGE__EXTRA = "extra";
     public static String SELECTED__EXTRA = "extra_image";
     public static Bitmap bitmap, filteredBitmap, finalBitmap;
@@ -56,6 +61,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     private static int RESULT_LOAD_IMAGE = 1;
     private ConstraintLayout consEditor;
     public static String fileName;
+    ImageButton ibEmoji, ibBrush;
 
     int brightnessFinal = 0;
     float saturationFinal = 1.0f;
@@ -69,10 +75,15 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-        preview = findViewById(R.id.image_preview);
+        photoEditorView = findViewById(R.id.image_preview);
+        photoEditor = new PhotoEditor.Builder(this, photoEditorView)
+                .setPinchTextScalable(true)
+                .build();
         ActionBar actionBar = getSupportActionBar();
         TabLayout editorTabLayout = findViewById(R.id.tab_view);
         ViewPager editorViewPager = findViewById(R.id.viewpager);
+        ibBrush = findViewById(R.id.ibBrush);
+        ibEmoji = findViewById(R.id.ibEmoji);
         consEditor = findViewById(R.id.ConsEditor);
 
         if (actionBar != null) {
@@ -99,15 +110,24 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
                 e.printStackTrace();
             }
         }
+
+        ibEmoji.setOnClickListener(emojiListener);
         setupViewPager(editorViewPager);
         editorTabLayout.setupWithViewPager(editorViewPager);
     }
+
+    private View.OnClickListener emojiListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
     private void loadImage(Bitmap temp) {
         bitmap = temp.copy(Bitmap.Config.ARGB_8888, true);
         filteredBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
         finalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        preview.setImageBitmap(bitmap);
+        photoEditorView.getSource().setImageBitmap(bitmap);
     }
 
     private void setupViewPager(ViewPager editorViewPager) {
@@ -133,7 +153,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         brightnessFinal = brightness;
         Filter filter = new Filter();
         filter.addSubFilter(new BrightnessSubFilter(brightness));
-        preview.setImageBitmap(filter.processFilter(finalBitmap.copy(Bitmap.Config.ARGB_8888, true)));
+        photoEditorView.getSource().setImageBitmap(filter.processFilter(finalBitmap.copy(Bitmap.Config.ARGB_8888, true)));
     }
 
     @Override
@@ -141,7 +161,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         contrastFinal = contrast;
         Filter filter = new Filter();
         filter.addSubFilter(new ContrastSubFilter(contrast));
-        preview.setImageBitmap(filter.processFilter(finalBitmap.copy(Bitmap.Config.ARGB_8888, true)));
+        photoEditorView.getSource().setImageBitmap(filter.processFilter(finalBitmap.copy(Bitmap.Config.ARGB_8888, true)));
     }
 
     @Override
@@ -149,7 +169,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         saturationFinal = saturation;
         Filter filter = new Filter();
         filter.addSubFilter(new SaturationSubfilter(saturation));
-        preview.setImageBitmap(filter.processFilter(finalBitmap.copy(Bitmap.Config.ARGB_8888, true)));
+        photoEditorView.getSource().setImageBitmap(filter.processFilter(finalBitmap.copy(Bitmap.Config.ARGB_8888, true)));
     }
 
     @Override
@@ -171,7 +191,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     public void onFilterselected(Filter filter) {
         resetControl();
         filteredBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        preview.setImageBitmap(filter.processFilter(filteredBitmap));
+        photoEditorView.getSource().setImageBitmap(filter.processFilter(filteredBitmap));
         finalBitmap = filteredBitmap.copy(Bitmap.Config.ARGB_8888, true);
     }
 
@@ -280,7 +300,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
             bitmap = bit.copy(Bitmap.Config.ARGB_8888, true);
             filteredBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
             finalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            preview.setImageBitmap(bitmap);
+            photoEditorView.getSource().setImageBitmap(bitmap);
             bit.recycle();
             filterImageFragment.displayThubnail(bitmap);
             Toast.makeText(EditorActivity.this, "Image selected", Toast.LENGTH_SHORT).show();
