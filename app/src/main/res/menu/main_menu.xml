@@ -6,12 +6,14 @@
         android:id="@+id/option_change"
         app:showAsAction="ifRoom"
         android:title="@string/change"
-        android:enabled="true"/>
+        android:enabled="true"
+        android:icon="@drawable/ic_open"/>
 
     <item
         android:id="@+id/option_save"
         app:showAsAction="ifRoom"
         android:title="@string/save"
-        android:enabled="true"/>
+        android:enabled="true"
+        android:icon="@drawable/ic_save"/>
 
 </menu>
