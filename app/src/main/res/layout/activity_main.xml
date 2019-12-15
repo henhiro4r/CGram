@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="casual"
-        android:text="Style Your Image"
+        android:text="Style your image with Wihemy"
         android:textColor="@color/text_tab"
         android:textSize="18sp"
         android:textStyle="bold"
