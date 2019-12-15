@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">CGram</string>
+    <string name="welcome">Welcome Aboard!</string>
+    <string name="take_picture">Take a picture</string>
+    <string name="select_gallery">Select from gallery</string>
+    <string name="save">Save</string>
+    <string name="change">Change Image</string>
+    <string name="press_exit">Press again to exit!</string>
+    <string name="saved">Saved to gallery</string>
+    <string name="filters">Filter Image</string>
+    <string name="adjust">Adjustment</string>
+    <string name="bright">Brightness</string>
+    <string name="blur">Blur</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
+    <string name="constraint">Constraint</string>
+    <string name="filter_name">Filter Name</string>
+    <string name="denied">Camera permission denied</string>
+    <string name="granted">Camera permission granted</string>
+    <string name="gallery_denied">Permission denied</string>
+    <string name="gallery_granted">Permission granted</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
