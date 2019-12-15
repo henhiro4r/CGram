@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         Button selectPicture = findViewById(R.id.btnSelect);
         takePicture.setOnClickListener(takePictureListener);
         selectPicture.setOnClickListener(selectPictureListener);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     private View.OnClickListener takePictureListener = new View.OnClickListener() {

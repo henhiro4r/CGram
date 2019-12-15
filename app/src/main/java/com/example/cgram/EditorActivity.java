@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,9 +23,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.cgram.adapter.ViewPagerAdapter;
 import com.example.cgram.fragment.EditImageFragment;
+import com.example.cgram.fragment.EmojiFragment;
 import com.example.cgram.fragment.FilterImageFragment;
 import com.example.cgram.utils.BitmapUtils;
 import com.example.cgram.utils.EditImageFragmentListener;
+import com.example.cgram.utils.EmojiFragmentListener;
 import com.example.cgram.utils.FilterListFragmentListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -45,10 +48,11 @@ import java.io.FileInputStream;
 import java.util.List;
 import java.util.Objects;
 
+import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
-public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener {
+public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener, EmojiFragmentListener {
 
     private PhotoEditorView photoEditorView;
     private PhotoEditor photoEditor;
@@ -77,6 +81,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         photoEditorView = findViewById(R.id.image_preview);
         photoEditor = new PhotoEditor.Builder(this, photoEditorView)
                 .setPinchTextScalable(true)
+                .setDefaultEmojiTypeface(Typeface.createFromAsset(getAssets(), "emojione-android.ttf"))
                 .build();
         ActionBar actionBar = getSupportActionBar();
         TabLayout editorTabLayout = findViewById(R.id.tab_view);
@@ -118,7 +123,9 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     private View.OnClickListener emojiListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            EmojiFragment emojiFragment = EmojiFragment.getInstance();
+            emojiFragment.setListener(EditorActivity.this);
+            emojiFragment.show(getSupportFragmentManager(), emojiFragment.getTag());
         }
     };
 
@@ -231,28 +238,39 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if(report.areAllPermissionsGranted()){
-                            try{
-                                final String path = BitmapUtils.insertImage(getContentResolver(), finalBitmap, System.currentTimeMillis()+"_img.jpg", null);
-                                if (!TextUtils.isEmpty(path)){
-                                    Snackbar snackbar = Snackbar.make(consEditor, "Image Saved", Snackbar.LENGTH_LONG)
-                                            .setAction("OPEN", new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Intent intent = new Intent();
-                                                    intent.setAction(Intent.ACTION_VIEW);
-                                                    intent.setDataAndType(Uri.parse(path), "image/*");
-                                                    startActivity(intent);
-                                                }
-                                            });
-                                    snackbar.show();
+                            photoEditor.saveAsBitmap(new OnSaveBitmap() {
+                                @Override
+                                public void onBitmapReady(Bitmap saveBitmap) {
+                                    try{
+                                        photoEditorView.getSource().setImageBitmap(saveBitmap);
+                                        final String path = BitmapUtils.insertImage(getContentResolver(), saveBitmap, System.currentTimeMillis()+"_img.jpg", null);
+                                        if (!TextUtils.isEmpty(path)){
+                                            Snackbar snackbar = Snackbar.make(consEditor, "Image Saved", Snackbar.LENGTH_LONG)
+                                                    .setAction("OPEN", new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            Intent intent = new Intent();
+                                                            intent.setAction(Intent.ACTION_VIEW);
+                                                            intent.setDataAndType(Uri.parse(path), "image/*");
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                            snackbar.show();
+                                        }
+                                        else {
+                                            Snackbar snackbar = Snackbar.make(consEditor, "Unable to Save Image", Snackbar.LENGTH_LONG);
+                                            snackbar.show();
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                                else {
-                                    Snackbar snackbar = Snackbar.make(consEditor, "Unable to Save Image", Snackbar.LENGTH_LONG);
-                                    snackbar.show();
+
+                                @Override
+                                public void onFailure(Exception e) {
+
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            });
                         }
                         else {
                             Toast.makeText(EditorActivity.this, getString(R.string.gallery_denied), Toast.LENGTH_SHORT).show();
@@ -304,5 +322,10 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
             filterImageFragment.displayThubnail(bitmap);
             Toast.makeText(EditorActivity.this, "Image selected", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onEmojiSelected(String emoji) {
+        photoEditor.addEmoji(emoji);
     }
 }
