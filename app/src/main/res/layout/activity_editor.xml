@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/ConsEditor"
     tools:context=".EditorActivity">
-    <ImageView
+    <ja.burhanrashid52.photoeditor.PhotoEditorView
         android:id="@+id/image_preview"
         android:layout_width="match_parent"
         android:layout_height="360dp"
@@ -22,7 +22,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/tab_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ibEmoji" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_view"
@@ -38,11 +38,11 @@
     </com.google.android.material.tabs.TabLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibEmoji"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="32dp"
-        app:layout_constraintStart_toEndOf="@+id/imageButton4"
+        app:layout_constraintStart_toEndOf="@+id/ibBrush"
         app:layout_constraintTop_toBottomOf="@+id/image_preview"
         app:srcCompat="@drawable/ic_emoticon" />
 
@@ -65,7 +65,7 @@
         app:srcCompat="@drawable/ic_burst_mode_black_24dp" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/ibBrush"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="32dp"
