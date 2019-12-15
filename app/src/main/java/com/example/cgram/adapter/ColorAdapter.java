@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cgram.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHolder> {
@@ -20,9 +21,9 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
     List<Integer> colorList;
     ColorAdapterListener listener;
 
-    public ColorAdapter(Context context, List<Integer> colorList, ColorAdapterListener listener) {
+    public ColorAdapter(Context context, ColorAdapterListener listener) {
         this.context = context;
-        this.colorList = colorList;
+        this.colorList = genColorList();
         this.listener = listener;
     }
 
@@ -56,6 +57,21 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
                 }
             });
         }
+    }
+
+    private List<Integer> genColorList(){
+        List<Integer> colorList = new ArrayList<>();
+        colorList.add(Color.BLACK);
+        colorList.add(Color.WHITE);
+        colorList.add(Color.BLUE);
+        colorList.add(Color.RED);
+        colorList.add(Color.CYAN);
+        colorList.add(Color.GREEN);
+        colorList.add(Color.YELLOW);
+        colorList.add(Color.GRAY);
+        colorList.add(Color.MAGENTA);
+
+        return colorList;
     }
 
     public interface ColorAdapterListener{
