@@ -298,7 +298,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
                                 public void onBitmapReady(Bitmap saveBitmap) {
                                     try{
                                         photoEditorView.getSource().setImageBitmap(saveBitmap);
-                                        final String path = BitmapUtils.insertImage(getContentResolver(), saveBitmap, System.currentTimeMillis()+"_img.jpg", null);
+                                        final String path = BitmapUtils.insertImage(getContentResolver(), saveBitmap, System.currentTimeMillis()+"_img.jpeg", null);
                                         if (!TextUtils.isEmpty(path)){
                                             Snackbar snackbar = Snackbar.make(consEditor, "Image Saved", Snackbar.LENGTH_LONG)
                                                     .setAction("OPEN", new View.OnClickListener() {
