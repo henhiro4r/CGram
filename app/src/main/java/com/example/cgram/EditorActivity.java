@@ -29,6 +29,7 @@ import com.example.cgram.fragment.EmojiFragment;
 import com.example.cgram.fragment.FilterImageFragment;
 import com.example.cgram.utils.AddTextFragmentListener;
 import com.example.cgram.utils.BitmapUtils;
+import com.example.cgram.utils.BrushFragmentListener;
 import com.example.cgram.utils.EditImageFragmentListener;
 import com.example.cgram.utils.EmojiFragmentListener;
 import com.example.cgram.utils.FilterListFragmentListener;
@@ -55,7 +56,7 @@ import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
-public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener, EmojiFragmentListener, AddTextFragmentListener {
+public class EditorActivity extends AppCompatActivity implements FilterListFragmentListener, EditImageFragmentListener, EmojiFragmentListener, AddTextFragmentListener, BrushFragmentListener {
 
     private PhotoEditorView photoEditorView;
     private PhotoEditor photoEditor;
@@ -167,8 +168,9 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     private View.OnClickListener brushListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            photoEditor.setBrushDrawingMode(true);
             BrushFragment brushFragment = BrushFragment.getInstance();
-//            brushFragment.setListener(EditorActivity.this);
+            brushFragment.setListener(EditorActivity.this);
             brushFragment.show(getSupportFragmentManager(), brushFragment.getTag());
         }
     };
@@ -392,5 +394,29 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     @Override
     public void onAddTextButtonClick(String text, int Color) {
         photoEditor.addText(text, Color);
+    }
+
+    @Override
+    public void onBrushSizeChangedListener(float size) {
+        photoEditor.setBrushSize(size);
+    }
+
+    @Override
+    public void onBrushOpacityChangedListener(int opacity) {
+        photoEditor.setOpacity(opacity);
+    }
+
+    @Override
+    public void onBrushColorChangedListener(int color) {
+        photoEditor.setBrushColor(color);
+    }
+
+    @Override
+    public void onBrushStateChangedListener(Boolean isEraser) {
+        if (isEraser) {
+            photoEditor.brushEraser();
+        } else {
+            photoEditor.setBrushDrawingMode(true);
+        }
     }
 }

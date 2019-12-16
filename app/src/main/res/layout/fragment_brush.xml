@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/sb_size"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <SeekBar
-        android:id="@+id/seekBar2"
+        android:id="@+id/sb_opacity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -69,7 +69,7 @@
         app:layout_constraintGuide_begin="173dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_colors"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
@@ -77,12 +77,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <Button
-        android:id="@+id/button"
+    <ToggleButton
+        android:id="@+id/btn_brush_state"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Button"
+        android:textOff="@string/brush"
+        android:textOn="@string/eraser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
