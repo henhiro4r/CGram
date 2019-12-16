@@ -23,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.cgram.adapter.ViewPagerAdapter;
 import com.example.cgram.fragment.AddTextFragment;
+import com.example.cgram.fragment.BrushFragment;
 import com.example.cgram.fragment.EditImageFragment;
 import com.example.cgram.fragment.EmojiFragment;
 import com.example.cgram.fragment.FilterImageFragment;
@@ -119,6 +120,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         }
 
         ibEmoji.setOnClickListener(emojiListener);
+        ibBrush.setOnClickListener(brushListener);
 
         ibText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +133,15 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         setupViewPager(editorViewPager);
         editorTabLayout.setupWithViewPager(editorViewPager);
     }
+
+    private View.OnClickListener brushListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BrushFragment brushFragment = BrushFragment.getInstance();
+//            brushFragment.setListener(EditorActivity.this);
+            brushFragment.show(getSupportFragmentManager(), brushFragment.getTag());
+        }
+    };
 
     private View.OnClickListener emojiListener = new View.OnClickListener() {
         @Override

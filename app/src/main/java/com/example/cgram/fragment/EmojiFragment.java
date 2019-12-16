@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cgram.R;
+import com.example.cgram.adapter.ColorAdapter;
 import com.example.cgram.adapter.EmojiAdapter;
 import com.example.cgram.utils.EmojiFragmentListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -29,6 +30,7 @@ public class EmojiFragment extends BottomSheetDialogFragment implements EmojiAda
     private RecyclerView rvEmoji;
     static EmojiFragment instance;
     EmojiFragmentListener listener;
+    private ColorAdapter adapter;
 
     public void setListener(EmojiFragmentListener listener) {
         this.listener = listener;

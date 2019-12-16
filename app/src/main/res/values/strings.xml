@@ -19,6 +19,8 @@
     <string name="granted">Camera permission granted</string>
     <string name="gallery_denied">Permission denied</string>
     <string name="gallery_granted">Permission granted</string>
+    <string name="opacity">Opacity</string>
+    <string name="size">Size</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
