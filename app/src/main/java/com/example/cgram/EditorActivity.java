@@ -67,7 +67,8 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     private static int RESULT_LOAD_IMAGE = 1;
     private ConstraintLayout consEditor;
     public static String fileName;
-    ImageButton ibEmoji, ibBrush, ibText;
+    ImageButton ibEmoji, ibBrush, ibText, ibImage;
+    public static final int PERMISSION_INSERT_IMAGE = 1001;
 
     int brightnessFinal = 0;
     float saturationFinal = 1.0f;
@@ -92,6 +93,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
         ibBrush = findViewById(R.id.ibBrush);
         ibEmoji = findViewById(R.id.ibEmoji);
         ibText = findViewById(R.id.ibText);
+        ibImage = findViewById(R.id.ibImage);
         consEditor = findViewById(R.id.ConsEditor);
 
         if (actionBar != null) {
@@ -130,8 +132,36 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
                 addTextFragment.show(getSupportFragmentManager(), addTextFragment.getTag());
             }
         });
+
+        ibImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addImageToPicture();
+            }
+        });
         setupViewPager(editorViewPager);
         editorTabLayout.setupWithViewPager(editorViewPager);
+    }
+
+    private void addImageToPicture() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if(report.areAllPermissionsGranted()){
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType("image/*");
+                            startActivityForResult(intent, PERMISSION_INSERT_IMAGE);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(EditorActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
     }
 
     private View.OnClickListener brushListener = new View.OnClickListener() {
@@ -332,18 +362,25 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK) {
-            Bitmap bit = BitmapUtils.getBitmapFromGallery(this, Objects.requireNonNull(data).getData(),800, 800);
-            bitmap.recycle();
-            finalBitmap.recycle();
-            filteredBitmap.recycle();
-            bitmap = bit.copy(Bitmap.Config.ARGB_8888, true);
-            filteredBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            finalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            photoEditorView.getSource().setImageBitmap(bitmap);
-            bit.recycle();
-            filterImageFragment.displayThubnail(bitmap);
-            Toast.makeText(EditorActivity.this, "Image selected", Toast.LENGTH_SHORT).show();
+        if (resultCode == Activity.RESULT_OK) {
+            if(requestCode == RESULT_LOAD_IMAGE ){
+                Bitmap bit = BitmapUtils.getBitmapFromGallery(this, Objects.requireNonNull(data).getData(),800, 800);
+                bitmap.recycle();
+                finalBitmap.recycle();
+                filteredBitmap.recycle();
+                bitmap = bit.copy(Bitmap.Config.ARGB_8888, true);
+                filteredBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                finalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                photoEditorView.getSource().setImageBitmap(bitmap);
+                bit.recycle();
+                filterImageFragment.displayThubnail(bitmap);
+                Toast.makeText(EditorActivity.this, "Image selected", Toast.LENGTH_SHORT).show();
+            }
+            else if(requestCode == PERMISSION_INSERT_IMAGE){
+                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 300, 300);
+                photoEditor.addImage(bitmap);
+            }
+
         }
     }
 
