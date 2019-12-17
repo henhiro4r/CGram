@@ -23,19 +23,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
  */
 public class AddTextFragment extends BottomSheetDialogFragment implements ColorAdapter.ColorAdapterListener  {
 
-    int colorSelected = Color.BLACK;
+    private int colorSelected = Color.BLACK;
 
-    AddTextFragmentListener listener;
+    private AddTextFragmentListener listener;
 
-    EditText edit_add_text;
-    RecyclerView recycler_color;
-    Button btn_done;
+    private EditText edit_add_text;
 
     public void setListener(AddTextFragmentListener listener){
         this.listener = listener;
     }
 
-    static AddTextFragment instance;
+    private static AddTextFragment instance;
 
     public static AddTextFragment getInstance(){
         if(instance == null){
@@ -55,8 +53,8 @@ public class AddTextFragment extends BottomSheetDialogFragment implements ColorA
         View itemView = inflater.inflate(R.layout.fragment_add_text, container, false);
 
         edit_add_text = itemView.findViewById(R.id.edit_add_text);
-        btn_done = itemView.findViewById(R.id.btn_add_text);
-        recycler_color = itemView.findViewById(R.id.recycler_color);
+        Button btn_done = itemView.findViewById(R.id.btn_add_text);
+        RecyclerView recycler_color = itemView.findViewById(R.id.recycler_color);
         recycler_color.setHasFixedSize(true);
         recycler_color.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -67,6 +65,7 @@ public class AddTextFragment extends BottomSheetDialogFragment implements ColorA
             @Override
             public void onClick(View view) {
                 listener.onAddTextButtonClick(edit_add_text.getText().toString(), colorSelected);
+                dismiss();
             }
         });
 

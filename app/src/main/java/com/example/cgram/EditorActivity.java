@@ -379,7 +379,7 @@ public class EditorActivity extends AppCompatActivity implements FilterListFragm
                 Toast.makeText(EditorActivity.this, "Image selected", Toast.LENGTH_SHORT).show();
             }
             else if(requestCode == PERMISSION_INSERT_IMAGE){
-                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 300, 300);
+                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, Objects.requireNonNull(data).getData(), 300, 300);
                 photoEditor.addImage(bitmap);
             }
 

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,6 @@ import com.example.cgram.utils.BitmapUtils;
 
 import java.io.FileOutputStream;
 import java.util.Objects;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,14 +92,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
+        long tsLong = System.currentTimeMillis()/1000;
+        String ts = Long.toString(tsLong);
         String filename =  ts+".jpeg";
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             try {
-                Bitmap photo = (Bitmap) (data).getExtras().get("data");
+                Bitmap photo = (Bitmap) Objects.requireNonNull((Objects.requireNonNull(data)).getExtras()).get("data");
                 FileOutputStream stream = this.openFileOutput(filename, Context.MODE_PRIVATE);
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                Objects.requireNonNull(photo).compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 stream.close();
                 photo.recycle();
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Image taken", Toast.LENGTH_SHORT).show();
         } else if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK) {
             try {
-                Bitmap picked = BitmapUtils.getBitmapFromGallery(this, data.getData(),800, 800);
+                Bitmap picked = BitmapUtils.getBitmapFromGallery(this, Objects.requireNonNull(data).getData(),800, 800);
                 FileOutputStream stream = this.openFileOutput(filename, Context.MODE_PRIVATE);
                 picked.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 stream.close();

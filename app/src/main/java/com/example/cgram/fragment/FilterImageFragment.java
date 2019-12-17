@@ -4,6 +4,10 @@ package com.example.cgram.fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,15 +16,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.cgram.EditorActivity;
 import com.example.cgram.R;
 import com.example.cgram.adapter.FilterAdapter;
-import com.example.cgram.utils.BitmapUtils;
 import com.example.cgram.utils.FilterListFragmentListener;
 import com.example.cgram.utils.SpacesItemDecoration;
 import com.zomato.photofilters.FilterPack;
@@ -36,10 +33,9 @@ import java.util.List;
  */
 public class FilterImageFragment extends Fragment implements FilterListFragmentListener{
 
-    private RecyclerView rvFilter;
     private FilterAdapter adapter;
-    ArrayList<ThumbnailItem> thumbnailItems;
-    FilterListFragmentListener listener;
+    private ArrayList<ThumbnailItem> thumbnailItems;
+    private FilterListFragmentListener listener;
 
     public void setListener(FilterListFragmentListener listener) {
         this.listener = listener;
@@ -62,7 +58,7 @@ public class FilterImageFragment extends Fragment implements FilterListFragmentL
         super.onViewCreated(view, savedInstanceState);
         thumbnailItems = new ArrayList<>();
         adapter = new FilterAdapter(thumbnailItems, this, getActivity());
-        rvFilter = view.findViewById(R.id.rv_filters);
+        RecyclerView rvFilter = view.findViewById(R.id.rv_filters);
         rvFilter.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvFilter.setItemAnimator(new DefaultItemAnimator());
         int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());

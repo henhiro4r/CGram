@@ -2,20 +2,15 @@ package com.example.cgram.fragment;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.cgram.R;
-import com.example.cgram.adapter.ColorAdapter;
 import com.example.cgram.adapter.EmojiAdapter;
 import com.example.cgram.utils.EmojiFragmentListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -27,10 +22,8 @@ import ja.burhanrashid52.photoeditor.PhotoEditor;
  */
 public class EmojiFragment extends BottomSheetDialogFragment implements EmojiAdapter.EmojiAdapterListener {
 
-    private RecyclerView rvEmoji;
-    static EmojiFragment instance;
-    EmojiFragmentListener listener;
-    private ColorAdapter adapter;
+    private static EmojiFragment instance;
+    private EmojiFragmentListener listener;
 
     public void setListener(EmojiFragmentListener listener) {
         this.listener = listener;
@@ -52,7 +45,7 @@ public class EmojiFragment extends BottomSheetDialogFragment implements EmojiAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View itemView = inflater.inflate(R.layout.fragment_emoji, container, false);
-        rvEmoji = itemView.findViewById(R.id.rv_emoji);
+        RecyclerView rvEmoji = itemView.findViewById(R.id.rv_emoji);
         rvEmoji.setHasFixedSize(true);
         rvEmoji.setLayoutManager(new GridLayoutManager(getActivity(), 5));
         EmojiAdapter adapter = new EmojiAdapter(getContext(), PhotoEditor.getEmojis(getContext()), this);
@@ -63,5 +56,6 @@ public class EmojiFragment extends BottomSheetDialogFragment implements EmojiAda
     @Override
     public void onEmojiItemSelecter(String emoji) {
         listener.onEmojiSelected(emoji);
+        dismiss();
     }
 }
