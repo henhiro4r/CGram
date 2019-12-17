@@ -2,11 +2,24 @@
 <resources>
     <color name="colorPrimary">#3d6bf4</color>
     <color name="colorPrimaryDark">#3d6bf4</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#f3aa51</color>
     <color name="text_tab">#ffffff</color>
     <color name="selected_filter">#0743f4</color>
     <color name="normal_filter">#8ca6f8</color>
     <color name="lightblue">#82a0f8</color>
     <color name="card_background_color">#ffffff</color>
+
+    <color name="pink">#d9598c</color> <!-- Wonyoung -->
+    <color name="pastel_pink">#f1d2e7</color> <!-- Sakura -->
+    <color name="orange">#f3aa51</color> <!-- Yuri -->
+    <color name="yellow">#fcf695</color> <!-- Yena -->
+    <color name="blue">#567ace</color> <!-- Yujin -->
+    <color name="sky_blue">#b7d3e9</color> <!-- Nako -->
+    <color name="purple">#bbb0dc</color> <!-- Eunbi -->
+    <color name="coral">#db706c</color> <!-- Hyewon -->
+    <color name="peach">#f1c3aa</color> <!-- Hitomi -->
+    <color name="mint">#cee5d5</color> <!-- Chaewon -->
+    <color name="white">#ffffff</color> <!-- Minju <3 -->
+    <color name="blue_mint">#a7e0e1</color> <!-- Chaeyeon -->
 
 </resources>

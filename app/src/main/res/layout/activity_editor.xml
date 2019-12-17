@@ -5,13 +5,13 @@
     android:id="@+id/ConsEditor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/card_background_color"
     tools:context=".EditorActivity">
 
     <ja.burhanrashid52.photoeditor.PhotoEditorView
         android:id="@+id/image_preview"
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="400dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,8 +37,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabTextColor="@color/colorPrimary">
+        app:tabIndicatorColor="@color/peach"
+        app:tabTextColor="@color/pink">
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -47,6 +47,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
         android:background="@color/card_background_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ibBrush"
@@ -61,6 +63,8 @@
         android:background="@android:color/white"
         app:layout_constraintEnd_toStartOf="@+id/ibImage"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
         app:layout_constraintTop_toBottomOf="@+id/image_preview"
         app:srcCompat="@drawable/ic_format_size_black_24dp" />
 
@@ -69,6 +73,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
         android:background="@color/card_background_color"
         app:layout_constraintEnd_toStartOf="@+id/ibBrush"
         app:layout_constraintStart_toEndOf="@+id/ibText"
@@ -80,6 +86,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
         android:background="@color/card_background_color"
         app:layout_constraintEnd_toStartOf="@+id/ibEmoji"
         app:layout_constraintStart_toEndOf="@+id/ibImage"
